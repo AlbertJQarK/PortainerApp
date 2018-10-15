@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PortainerIO App</string>
+    <string name="author">Author</string>   <string name="connect">Go!</string>
+    <string name="address">Portainer server Address</string>
+    <string name="ok">Ok</string>
+    <string name="welcome_message">MANAGE YOUR DOCKER ENVIRONMENTS WITH EASE</string>
+    <string name="welcome_instructions">ORTAINER IS AN OPEN-SOURCE LIGHTWEIGHT MANAGEMENT UI WHICH ALLOWS YOU TO EASILY MANAGE YOUR DOCKER HOSTS OR SWARM CLUSTERS</string>
+</resources>

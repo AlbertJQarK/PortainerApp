@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_half_margin">8dp</dimen>
+    <dimen name="default_quarter_margin">4dp</dimen>
+    <dimen name="default_double_margin">32dp</dimen>
+
+    <dimen name="interest_grid_separation">2dp</dimen>
+</resources>
