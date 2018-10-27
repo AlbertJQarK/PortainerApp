@@ -1,7 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.albertjsoft.portainerapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
     <application
+        android:name=".app.PortainerApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +18,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".view.ui.WelcomeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
 
@@ -21,5 +28,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label="@string/login">
+
+            <intent-filter android:label="@string/login">
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="com.albertjsoft.portainerapp"
+                    android:host="login"/>
+
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.ui.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
+        <service
+            android:name=".session.SessionService"
+            android:exported="true"
+            android:process=":auth" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/portainer_app_authenticator" />
+        </service>
     </application>
 </manifest>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="author">Author</string>
+    <string name="connect">Go!</string>
+    <string name="error_title">Ups!</string>
+    <string name="http">"http://"</string>
+    <string name="login">Login</string>
+    <string name="ok">OK</string>
+    <string name="password">Password</string>
+    <string name="port">:</string>
+    <string name="username">Username</string>
+</resources>

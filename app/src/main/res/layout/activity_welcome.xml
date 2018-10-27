@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_image"
     android:background="@drawable/background"
-    tools:context=".WelcomeActivity">
+    tools:context=".view.ui.WelcomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rl_opacity"
         android:background="#AA2E3141"
-        tools:context=".WelcomeActivity">
+        tools:context=".view.ui.WelcomeActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,29 +57,41 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/default_margin"
             android:layout_marginBottom="30dp">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_server_address"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:hint="@string/address"
-                android:labelFor="@id/et_server_address"
-                android:theme="@style/WhiteEditText">
+                android:gravity="center"
+                android:orientation="horizontal" >
 
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/et_server_address"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorText"
+                    android:text="@string/http"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_server_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textNoSuggestions"
-                    android:imeOptions="actionNext"
-                    android:textColor="@color/grey_500"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    tools:text="albertj"/>
+                    android:hint="@string/address"
+                    android:labelFor="@id/et_server_address"
+                    android:theme="@style/WhiteEditText">
 
-            </android.support.design.widget.TextInputLayout>
-
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_server_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textNoSuggestions"
+                        android:imeOptions="actionDone"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorText"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
             <Button
                 android:id="@+id/bt_check"
                 style="@style/GreenButton"
