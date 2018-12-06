@@ -1,16 +1,14 @@
 package com.albertjsoft.portainerapp.view.ui
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.arch.lifecycle.ViewModelProviders
-import android.arch.lifecycle.Observer
-
-import com.albertjsoft.portainerapp.data.api.Status.*
 import com.albertjsoft.portainerapp.R
+import com.albertjsoft.portainerapp.data.api.Status.*
+import com.albertjsoft.portainerapp.util.setVisible
 import com.albertjsoft.portainerapp.viewodel.LoginViewModel
-import com.albertjsoft.portainerapp.util.*
-
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**

@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".app.PortainerApp"
@@ -47,9 +50,8 @@
             android:screenOrientation="portrait"/>
         <service
             android:name=".session.SessionService"
-            android:exported="true"
-            android:process=":auth" >
-            <intent-filter>
+            android:exported="true" >
+           <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
 

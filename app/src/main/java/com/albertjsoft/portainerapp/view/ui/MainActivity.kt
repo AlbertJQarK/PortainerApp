@@ -2,7 +2,6 @@ package com.albertjsoft.portainerapp.view.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
 import com.albertjsoft.portainerapp.R
 
 /**

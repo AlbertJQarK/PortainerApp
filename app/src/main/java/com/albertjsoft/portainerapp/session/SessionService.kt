@@ -1,54 +1,46 @@
 package com.albertjsoft.portainerapp.session
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
-
-import com.albertjsoft.portainerapp.app.PortainerApp
 
 /**
  * Created by albertj on 18/10/2018.
  */
 class SessionService : Service(){
 
-    init {
-        val session = SessionAuthenticator.loadInstance(appContext!!)
+    var authenticator: SessionAuthenticator? = null
 
-        if (session != null) {
-            startUserSession(session)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val authenticator = SessionAuthenticator.loadInstance()
+
+        if (authenticator != null) {
+            saveUserSession(authenticator)
         }
+        return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        when (intent.action == android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT) {
-            //TODO: bind authenticator
-        }
-        return null
+    override fun onBind(intent: Intent): IBinder {
+        if (intent.action == android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT)
+            if (authenticator == null) {
+                authenticator = SessionAuthenticator.loadInstance()
+            }
+        return iBinder
     }
 
-    fun startUserSession(sessionInstance: SessionAuthenticator) {
-        session = sessionInstance
+    private val iBinder = LocalIBinder()
+
+    inner class LocalIBinder : Binder() {
+        fun getService(): SessionService = this@SessionService
+    }
+
+    private fun saveUserSession(sessionInstance: SessionAuthenticator) {
+        authenticator = sessionInstance
         saveCurrentSession()
     }
 
     private fun saveCurrentSession() {
-        SessionAuthenticator.saveInstance(session, PortainerApp.instance)
-    }
-
-    companion object {
-        var instance: SessionService? = null
-            private set
-
-        var session: SessionAuthenticator? = null
-            private set
-
-        var appContext: Context? = null
-            private set
-
-        fun init(applicationContext: Context) {
-            this.appContext = applicationContext
-            instance = SessionService()
-        }
+        SessionAuthenticator.saveInstance(authenticator)
     }
 }

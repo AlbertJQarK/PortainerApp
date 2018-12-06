@@ -3,10 +3,9 @@ package com.albertjsoft.portainerapp.viewodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-
-import com.albertjsoft.portainerapp.session.UserSessionInteractor
 import com.albertjsoft.portainerapp.data.api.Resource
 import com.albertjsoft.portainerapp.data.api.Status
+import com.albertjsoft.portainerapp.session.UserSessionInteractor
 
 /**
  * Created by albertj on 18/10/2018.

@@ -1,8 +1,8 @@
 package com.albertjsoft.portainerapp.view.ui
 
+import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
 import android.os.Bundle
-import android.accounts.AccountAuthenticatorResponse
 import android.support.v7.app.AppCompatActivity
 
 /**

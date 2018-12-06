@@ -1,20 +1,18 @@
 package com.albertjsoft.portainerapp.session
 
-import android.content.Context
-
-import com.albertjsoft.portainerapp.service.model.User
-
-import android.accounts.AccountManager
 import android.accounts.Account
+import android.accounts.AccountManager
+import android.accounts.AccountManagerFuture
 import android.content.Intent
 import android.os.Bundle
+import com.albertjsoft.portainerapp.app.PortainerApp
+import com.albertjsoft.portainerapp.service.model.User
 import com.albertjsoft.portainerapp.view.ui.WelcomeActivity
-import android.accounts.AccountManagerFuture
+
 
 /**
  * Created by albertj on 18/10/2018.
  */
-
 class SessionAuthenticator(token: String, private var user: User, private var password: String) {
 
     var token: String? = null
@@ -27,23 +25,27 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
     companion object {
 
         private const val PARAM_PASS = "USER_PASS"
+        private const val ACCOUNT_TYPE = "com.albertjsoft.portainerapp.auth_portainerapp"
+        private const val AUTH_TYPE = "PortainerApp:AuthType"
+        private const val ACCOUNT_NAME = "PortainerApp"
 
         private var mAccountManager: AccountManager? = null
-        var savedToken: String? = null
+        private var savedToken: String? = null
 
-        fun loadInstance(context: Context): SessionAuthenticator? {
-            mAccountManager =  AccountManager.get(context)
+        fun loadInstance(): SessionAuthenticator? {
+            mAccountManager =  AccountManager.get(PortainerApp.instance)
 
-            var session: SessionAuthenticator? = null
+            var sessionAuthenticator: SessionAuthenticator? = null
             var lastSavedToken: String? = null
             var lastSavedUsername: String? = null
             var lastSavedServerAddress: String? = null
 
-            val account = findAccount(WelcomeActivity.ACCOUNT_NAME, WelcomeActivity.ACCOUNT_TYPE)
+            val account = findAccount(ACCOUNT_NAME, ACCOUNT_TYPE)
             if(account != null) {
+                // Obtain account token
                 val threat = Thread(Runnable {
-                    val resultFuture: AccountManagerFuture<Bundle>  = mAccountManager!!.getAuthToken(account, WelcomeActivity.AUTH_TYPE, null, context as WelcomeActivity, null, null)
-                    val bundle: Bundle = resultFuture.result
+                    val response: AccountManagerFuture<Bundle>  = mAccountManager!!.getAuthToken(account, AUTH_TYPE, false,  null, null)
+                    val bundle: Bundle = response.result
                     savedToken =  bundle.getString("authtoken")
                 })
 
@@ -53,6 +55,7 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
                 // wait for thread to finish
                 threat.join()
 
+                // Restore session parameters
                 lastSavedToken = savedToken
                 lastSavedUsername = mAccountManager!!.getUserData(account, "user")
                 lastSavedServerAddress = mAccountManager!!.getUserData(account, "serverAddress")
@@ -63,42 +66,45 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
                 user.userName = lastSavedUsername
                 user.ServerAddress = lastSavedServerAddress
 
-                session = SessionAuthenticator(lastSavedToken, user, mAccountManager!!.getPassword(account))
+                // Set Authenticator
+                sessionAuthenticator = sessionAuthenticatorProvider(lastSavedToken, user, account!!)
             }
 
-            return session
+            return sessionAuthenticator
         }
 
-        fun saveInstance(session: SessionAuthenticator?, context: Context) {
-            mAccountManager = AccountManager.get(context)
+        private fun sessionAuthenticatorProvider(token: String, user: User, account: Account) : SessionAuthenticator =
+                SessionAuthenticator(token, user, mAccountManager!!.getPassword(account))
+
+        fun saveInstance(session: SessionAuthenticator?) {
+            mAccountManager = AccountManager.get(PortainerApp.instance)
 
             val username: String? = session!!.user.userName
             val token: String? = session.token
             val password: String? = session.password
 
             if (!username.isNullOrEmpty()) {
+                // Setup account configuration bundle
                 val data = Bundle()
-                data.putString(AccountManager.KEY_ACCOUNT_NAME, WelcomeActivity.ACCOUNT_NAME)
-                data.putString(AccountManager.KEY_ACCOUNT_TYPE, WelcomeActivity.ACCOUNT_TYPE)
+                data.putString(AccountManager.KEY_ACCOUNT_NAME, ACCOUNT_NAME)
+                data.putString(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE)
                 data.putString(AccountManager.KEY_AUTHTOKEN, token)
                 data.putString(PARAM_PASS, password)
 
-                // Extra data about the user and passed back an intent to the Android Authenticator
+                // Extra data about the user
                 val userData = Bundle()
                 userData.putString("serverAddress", session.user.ServerAddress)
                 userData.putString("user", username)
                 data.putBundle(AccountManager.KEY_USERDATA, userData)
-                val res = Intent()
-                res.putExtras(data)
 
-                //Create the new account
-                val account = Account(WelcomeActivity.ACCOUNT_NAME, WelcomeActivity.ACCOUNT_TYPE)
+                // Put data on intent
+                val intent = Intent()
+                intent.putExtras(data)
 
-                //Add the account to the Android System
-                if (mAccountManager!!.addAccountExplicitly(account, password, userData)) {
-                    mAccountManager!!.setAuthToken(account, WelcomeActivity.AUTH_TYPE, token)
-                    WelcomeActivity.instance.setAccountAuthenticator(data,res)
-                }
+                // Create the new account
+                val account = Account(ACCOUNT_NAME, ACCOUNT_TYPE)
+
+                addAccount(account, password, userData, data, intent, token)
             }
         }
 
@@ -113,5 +119,13 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
             return appAccount
         }
 
+        private fun addAccount(account: Account, password: String?, userData: Bundle, data: Bundle, res: Intent, token: String?){
+            if (mAccountManager!!.addAccountExplicitly(account, password, userData)) {
+                mAccountManager!!.setAuthToken(account, AUTH_TYPE, token)
+                WelcomeActivity.instance.setAccountAuthenticator(data,res)
+            }
+        }
     }
+
 }
+

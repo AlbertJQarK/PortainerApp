@@ -4,12 +4,12 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.AppCompatEditText
 import android.view.View
 import com.albertjsoft.portainerapp.R
 
 import com.albertjsoft.portainerapp.session.SessionAuthenticator
 import com.albertjsoft.portainerapp.session.SessionService
+import kotlinx.android.synthetic.main.activity_welcome.*
 
 /**
  * Created by albertj on 15/10/2018.
@@ -25,7 +25,12 @@ class WelcomeActivity:  AccountAuthenticatorAppCompatActivity(), View.OnClickLis
         findViewById<View>(R.id.bt_check).setOnClickListener(this)
 
         mAccountManager = AccountManager.get(this)
-        SessionService.init(this)
+
+        //Start Service
+        val intent = Intent(this, SessionService::class.java)
+        intent.action = android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT
+        startService(intent)
+
         instance=this
 
         val actionBar = supportActionBar
@@ -34,19 +39,17 @@ class WelcomeActivity:  AccountAuthenticatorAppCompatActivity(), View.OnClickLis
         startMainActivityIfActiveSession()
     }
 
-    private fun startMainActivityIfActiveSession() {
-        val session: SessionAuthenticator? = SessionService.session
-        if (session != null) {
-            startMainActivity()
+    override fun onClick(view: View) {
+        if (view.id == R.id.bt_check){
+            mServerAddress = et_server_address.text.toString()
+            startLoginActivity()
         }
     }
 
-    override fun onClick(view: View) {
-        if (view.id == R.id.bt_check){
-            mServerAddress = findViewById<AppCompatEditText>(R.id.et_server_address).
-                    text.toString()
-            startLoginActivity()
-
+    private fun startMainActivityIfActiveSession() {
+        val sessionAuthenticator: SessionAuthenticator? = SessionAuthenticator.loadInstance()
+        if (sessionAuthenticator != null) {
+            startMainActivity()
         }
     }
 
@@ -72,9 +75,5 @@ class WelcomeActivity:  AccountAuthenticatorAppCompatActivity(), View.OnClickLis
 
         lateinit var instance: WelcomeActivity
             private set
-
-        const val ACCOUNT_TYPE = "com.albertjsoft.portainerapp.auth_portainerapp"
-        const val AUTH_TYPE = "PortainerApp:AuthType"
-        const val ACCOUNT_NAME = "PortainerApp"
     }
 }
