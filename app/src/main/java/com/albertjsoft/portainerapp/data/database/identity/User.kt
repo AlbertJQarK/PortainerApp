@@ -1,4 +1,4 @@
-package com.albertjsoft.portainerapp.service.model
+package com.albertjsoft.portainerapp.data.database.identity
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

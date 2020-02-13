@@ -5,8 +5,8 @@ import android.accounts.AccountManager
 import android.accounts.AccountManagerFuture
 import android.content.Intent
 import android.os.Bundle
-import com.albertjsoft.portainerapp.PortainerApp
-import com.albertjsoft.portainerapp.service.model.User
+import com.albertjsoft.portainerapp.App
+import com.albertjsoft.portainerapp.data.database.identity.User
 import com.albertjsoft.portainerapp.view.ui.WelcomeActivity
 
 
@@ -26,14 +26,14 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
 
         private const val PARAM_PASS = "USER_PASS"
         private const val ACCOUNT_TYPE = "com.albertjsoft.portainerapp.auth_portainerapp"
-        private const val AUTH_TYPE = "PortainerApp:AuthType"
-        private const val ACCOUNT_NAME = "PortainerApp"
+        private const val AUTH_TYPE = "App:AuthType"
+        private const val ACCOUNT_NAME = "App"
 
         private var mAccountManager: AccountManager? = null
         private var savedToken: String? = null
 
         fun loadInstance(): SessionAuthenticator? {
-            mAccountManager =  AccountManager.get(PortainerApp.instance)
+            mAccountManager =  AccountManager.get(App.instance)
 
             var sessionAuthenticator: SessionAuthenticator? = null
             var lastSavedToken: String? = null
@@ -77,7 +77,7 @@ class SessionAuthenticator(token: String, private var user: User, private var pa
                 SessionAuthenticator(token, user, mAccountManager!!.getPassword(account))
 
         fun saveInstance(session: SessionAuthenticator?) {
-            mAccountManager = AccountManager.get(PortainerApp.instance)
+            mAccountManager = AccountManager.get(App.instance)
 
             val username: String? = session!!.user.userName
             val token: String? = session.token

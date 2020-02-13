@@ -6,7 +6,7 @@ import com.albertjsoft.portainerapp.data.api.Resource
 import com.albertjsoft.portainerapp.data.api.Status
 import com.albertjsoft.portainerapp.data.repository.AuthenticationRepository
 import com.albertjsoft.portainerapp.data.repository.provideAuthenticationRepository
-import com.albertjsoft.portainerapp.service.model.User
+import com.albertjsoft.portainerapp.data.database.identity.User
 
 /**
  * Created by albertj on 18/10/2018.

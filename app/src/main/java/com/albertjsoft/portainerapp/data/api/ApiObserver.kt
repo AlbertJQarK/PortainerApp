@@ -2,7 +2,7 @@ package com.albertjsoft.portainerapp.data.api
 
 
 import android.support.annotation.CallSuper
-import com.albertjsoft.portainerapp.PortainerApp
+import com.albertjsoft.portainerapp.App
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.json.JSONException
@@ -47,23 +47,23 @@ abstract class ApiObserver<T> : Observer<T> {
             }
 
     private fun onNetworkError() =
-            PortainerApp.instance.showToast("Ups!", "Network error")
+            App.instance.showToast("Ups!", "Network error")
 
 
     private fun onTimeout() =
-            PortainerApp.instance.showToast("Ups!", "Timeout")
+            App.instance.showToast("Ups!", "Timeout")
 
     private fun onUnknownError(errorMessage: String?) =
-            PortainerApp.instance.showToast("Unknown Error", errorMessage)
+            App.instance.showToast("Unknown Error", errorMessage)
 
     private fun onNotFoundError(httpException: HttpException) =
-            PortainerApp.instance.showToast("Not Found", getErrorMessage(httpException))
+            App.instance.showToast("Not Found", getErrorMessage(httpException))
 
     private fun onBadRequestError(httpException: HttpException) =
-            PortainerApp.instance.showToast("Bad Request", getErrorMessage(httpException))
+            App.instance.showToast("Bad Request", getErrorMessage(httpException))
 
     private fun onInternalServerError(httpException: HttpException) =
-            PortainerApp.instance.showToast("Internal server error", getErrorMessage(httpException))
+            App.instance.showToast("Internal server error", getErrorMessage(httpException))
 
     private fun getErrorMessage(httpException: HttpException): String? =
             try {

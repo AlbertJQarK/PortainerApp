@@ -5,7 +5,7 @@ import android.app.Application
 /**
  * Created by albertj on 18/10/2018.
  */
-class PortainerApp : Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -14,7 +14,7 @@ class PortainerApp : Application() {
     }
 
     companion object {
-        lateinit var instance: PortainerApp
+        lateinit var instance: App
             private set
     }
 }
