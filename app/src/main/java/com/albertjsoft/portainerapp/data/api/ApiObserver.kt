@@ -2,7 +2,7 @@ package com.albertjsoft.portainerapp.data.api
 
 
 import android.support.annotation.CallSuper
-import com.albertjsoft.portainerapp.app.PortainerApp
+import com.albertjsoft.portainerapp.PortainerApp
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.json.JSONException

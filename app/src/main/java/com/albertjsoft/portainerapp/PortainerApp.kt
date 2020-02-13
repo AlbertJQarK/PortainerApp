@@ -1,4 +1,4 @@
-package com.albertjsoft.portainerapp.app
+package com.albertjsoft.portainerapp
 
 import android.app.Application
 

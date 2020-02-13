@@ -5,7 +5,7 @@ import android.accounts.AccountManager
 import android.accounts.AccountManagerFuture
 import android.content.Intent
 import android.os.Bundle
-import com.albertjsoft.portainerapp.app.PortainerApp
+import com.albertjsoft.portainerapp.PortainerApp
 import com.albertjsoft.portainerapp.service.model.User
 import com.albertjsoft.portainerapp.view.ui.WelcomeActivity
 

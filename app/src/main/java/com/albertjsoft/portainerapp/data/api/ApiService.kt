@@ -10,40 +10,26 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by albertj on 18/10/2018.
- */
-internal fun provideAuthenticationService() = createService(AuthService::class.java)
 
 private const val DEFAULT_TIMEOUT = 30
 private var apiBaseUrl = "http://localhost:9000"
+private var builder =  Retrofit.Builder().baseUrl(apiBaseUrl)
 
+internal fun provideAuthenticationService() = createService(AuthService::class.java)
 
-private var builder = Retrofit.Builder().baseUrl(apiBaseUrl)
+fun <T> createService(service: Class<T>): T = provideRetrofit().create(service)
 
-fun <T> createService(service: Class<T>): T {
-    return provideRetrofit().create(service)
-}
+private fun provideRetrofit(): Retrofit = builder.build()
 
-private fun provideRetrofit(): Retrofit {
-    return builder.build()
-}
+private fun provideOkHttpClient(): OkHttpClient =
+    OkHttpClient.Builder().apply {
+        connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+        readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+        writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+    }.build()
 
-private fun provideOkHttpClient(): OkHttpClient {
-    val httpClient = OkHttpClient.Builder()
-    httpClient.connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-    httpClient.readTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-    httpClient.writeTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-
-    return httpClient.build()
-}
-
-private fun provideGson(): Gson {
-    val gsonBuilder = GsonBuilder()
-    gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-
-    return gsonBuilder.create()
-}
+private fun provideGson(): Gson =
+            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
 fun changeApiBaseUrl(newApiBaseUrl: String) {
     apiBaseUrl = newApiBaseUrl
