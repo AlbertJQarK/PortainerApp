@@ -1,4 +1,4 @@
-package com.albertjsoft.portainerapp.view.ui
+package com.albertjsoft.portainerapp.view.ui.login
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.albertjsoft.portainerapp.R
 import com.albertjsoft.portainerapp.data.api.Status.*
 import com.albertjsoft.portainerapp.util.setVisible
-import com.albertjsoft.portainerapp.viewodel.LoginViewModel
+import com.albertjsoft.portainerapp.view.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

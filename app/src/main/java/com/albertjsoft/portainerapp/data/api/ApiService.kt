@@ -50,7 +50,7 @@ fun changeApiBaseUrl(newApiBaseUrl: String) {
 
     builder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://" + apiBaseUrl)
+            .baseUrl("http:// $apiBaseUrl")
             .addConverterFactory(GsonConverterFactory.create(provideGson()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(provideOkHttpClient())

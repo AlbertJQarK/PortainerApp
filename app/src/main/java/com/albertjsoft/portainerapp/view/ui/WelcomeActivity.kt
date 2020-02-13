@@ -9,6 +9,8 @@ import com.albertjsoft.portainerapp.R
 
 import com.albertjsoft.portainerapp.session.SessionAuthenticator
 import com.albertjsoft.portainerapp.session.SessionService
+import com.albertjsoft.portainerapp.view.ui.home.HomeActivity
+import com.albertjsoft.portainerapp.view.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 
 /**
@@ -54,7 +56,7 @@ class WelcomeActivity:  AccountAuthenticatorAppCompatActivity(), View.OnClickLis
     }
 
     private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

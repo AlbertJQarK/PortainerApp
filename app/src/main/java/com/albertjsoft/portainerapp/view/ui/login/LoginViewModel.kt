@@ -1,4 +1,4 @@
-package com.albertjsoft.portainerapp.viewodel
+package com.albertjsoft.portainerapp.view.ui.login
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData

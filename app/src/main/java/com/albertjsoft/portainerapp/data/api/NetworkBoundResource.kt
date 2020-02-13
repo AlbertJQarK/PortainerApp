@@ -3,7 +3,6 @@ package com.albertjsoft.portainerapp.data.api
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.MainThread
-import com.albertjsoft.portainerapp.data.api.observer.ApiObserver
 import com.albertjsoft.portainerapp.data.api.response.ApiResponse
 import io.reactivex.Observable
 import io.reactivex.Observer

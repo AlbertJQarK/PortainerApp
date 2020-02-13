@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".view.ui.LoginActivity">
+    tools:context=".view.ui.login.LoginActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
